@@ -3,11 +3,17 @@
 # Exercise 2.4
 import sys
 import fileparse
+from stock import Stock
 
 
 def read_portfolio(filename):
     with open(filename) as file:
-        portfolio = fileparse.parse_csv(file, select=['name', 'shares', 'price'], types=[str, int, float], has_headers=True)
+        portdicts = fileparse.parse_csv(file,
+                                        select=['name', 'shares', 'price'],
+                                        types=[str, int, float],
+                                        has_headers=True)
+
+        portfolio = [Stock(d['name'], d['shares'], d['price']) for d in portdicts]
         return portfolio
 
 
@@ -43,9 +49,9 @@ def read_price(filename):
 def mark_report(portfolio, prices):
     result = []
     for stock in portfolio:
-        name = stock['name']
-        price = float(stock['price'])
-        shares = int(stock['shares'])
+        name = stock.name
+        price = float(stock.price)
+        shares = int(stock.shares)
 
         current_price = float(prices[name])
         gain_lose = round((current_price - price) * shares, 2)
