@@ -6,6 +6,7 @@ import fileparse
 from stock import Stock
 import tableformat
 from portfolio import Portfolio
+import logging
 
 def read_portfolio(filename, **opts):
     with open(filename) as file:
@@ -107,6 +108,11 @@ def main(args):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(
+        filename='app.log',
+        filemode='w',
+        level=logging.WARNING,
+    )
     main(sys.argv)
 
 
