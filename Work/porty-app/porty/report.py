@@ -2,21 +2,14 @@
 #
 # Exercise 2.4
 import sys
-import fileparse
-from stock import Stock
-import tableformat
-from portfolio import Portfolio
+from . import fileparse
+from . import tableformat
+from .portfolio import Portfolio
 import logging
 
 def read_portfolio(filename, **opts):
     with open(filename) as file:
-        portdicts = fileparse.parse_csv(file,
-                                        select=['name', 'shares', 'price'],
-                                        types=[str, int, float],
-                                        has_headers=True, **opts)
-
-        portfolio = [Stock(**d) for d in portdicts]
-        return Portfolio(portfolio)
+        return Portfolio.from_csv(file, **opts)
 
 
 def read_price(filename):
@@ -109,7 +102,7 @@ def main(args):
 
 if __name__ == '__main__':
     logging.basicConfig(
-        filename='app.log',
+        filename='../../app.log',
         filemode='w',
         level=logging.WARNING,
     )

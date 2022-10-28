@@ -1,9 +1,10 @@
 # ticker.py
 
-from follow import follow
+from . import follow
 import csv
-import report
-from tableformat import create_formatter, print_table
+from . import report
+from .tableformat import create_formatter
+
 
 def select_columns(rows, indices):
     for row in rows:
@@ -28,8 +29,8 @@ def filter_symbols(rows, names):
 
 def ticker(portfile, logfile, fmt):
     columns = ['name', 'price', 'change']
-    portfolio = report.read_portfolio('Data/portfolio.csv')
-    lines = follow('Data/stocklog.csv')
+    portfolio = report.read_portfolio('../../Data/portfolio.csv')
+    lines = follow('../Data/stocklog.csv')
     rows = parse_stock_data(lines)
     rows = select_columns(rows, [0, 1, 4])
     rows = convert_types(rows, [str, float, float])
